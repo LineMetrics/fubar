@@ -230,7 +230,8 @@ bind_session(Message=#mqtt_connect{client_id=ClientId}, State) ->
 			Reply = case KeepAlive =:= Message#mqtt_connect.keep_alive of
 						true -> mqtt:connack([{code, accepted}]);
 						% MQTT extension: server may suggest different keep-alive.
-						_ -> mqtt:connack([{code, accepted}, {extra, <<KeepAlive:16/big-unsigned>>}])
+						_ -> mqtt:connack([{code, accepted}])
+						%%_ -> mqtt:connack([{code, accepted}, {extra, <<KeepAlive:16/big-unsigned>>}])
 					end,
 			case Message#mqtt_connect.clean_session of
 				true -> mqtt_session:clean(Session);
